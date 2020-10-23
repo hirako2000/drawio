@@ -1652,38 +1652,7 @@ EditorUi.prototype.createPageMenu = function(page, label)
 		{
 			menu.addSeparator(parent);
 			
-			menu.addItem(mxResources.get('link'), null, mxUtils.bind(this, function()
-			{
-				this.showPublishLinkDialog(mxResources.get('url'), true, null, null,
-					mxUtils.bind(this, function(linkTarget, linkColor, allPages, lightbox, editLink, layers)
-				{
-					var params = this.createUrlParameters(linkTarget, linkColor, allPages, lightbox, editLink, layers);
-					
-					if (!allPages)
-					{
-						params.push('hide-pages=1');
-					}
-					
-					if (!graph.isSelectionEmpty())
-					{
-						var bounds = graph.getBoundingBox(graph.getSelectionCells());
-								
-						var t = graph.view.translate;
-						var s = graph.view.scale;
-						bounds.width /= s;
-						bounds.height /= s;
-						bounds.x = bounds.x / s - t.x;
-						bounds.y = bounds.y / s - t.y;
-					
-						params.push('viewbox=' + encodeURIComponent(JSON.stringify({x: Math.round(bounds.x), y: Math.round(bounds.y),
-							width: Math.round(bounds.width), height: Math.round(bounds.height), border: 100})));
-					}
-					
-					var dlg = new EmbedDialog(this, this.getLinkForPage(page, params, lightbox));
-					this.showDialog(dlg.container, 440, 240, true, true);
-					dlg.init();
-				}));
-			}));
+			
 		}
 		
 		menu.addSeparator(parent);

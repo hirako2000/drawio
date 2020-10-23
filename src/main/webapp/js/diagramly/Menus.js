@@ -1754,30 +1754,7 @@
 				true, 'https://desk.draw.io/support/solutions/articles/16000042548');
 		}));
 		
-		editorUi.actions.put('embedIframe', new Action(mxResources.get('iframe') + '...', function()
-		{
-			var bounds = graph.getGraphBounds();
-			
-			editorUi.showPublishLinkDialog(mxResources.get('iframe'), null, '100%',
-				Math.ceil(bounds.height / graph.view.scale) + 2,
-				function(linkTarget, linkColor, allPages, lightbox, editLink, layers, width, height)
-			{
-				if (editorUi.spinner.spin(document.body, mxResources.get('loading')))
-				{
-					editorUi.getPublicUrl(editorUi.getCurrentFile(), function(url)
-					{
-						editorUi.spinner.stop();
-						
-						var dlg = new EmbedDialog(editorUi, '<iframe frameborder="0" style="width:' + width +
-							';height:' + height + ';" src="' + editorUi.createLink(linkTarget, linkColor,
-							allPages, lightbox, editLink, layers, url) + '"></iframe>');
-						editorUi.showDialog(dlg.container, 440, 240, true, true);
-						dlg.init();
-					});
-				}
-			}, true);
-		}));
-		
+	
 
 		editorUi.actions.addAction('microsoftOffice...', function()
 		{
