@@ -1789,24 +1789,6 @@
 			}, true);
 		}));
 		
-		editorUi.actions.put('publishLink', new Action(mxResources.get('link') + '...', function()
-		{
-			editorUi.showPublishLinkDialog(null, null, null, null,
-				function(linkTarget, linkColor, allPages, lightbox, editLink, layers)
-			{
-				if (editorUi.spinner.spin(document.body, mxResources.get('loading')))
-				{
-					editorUi.getPublicUrl(editorUi.getCurrentFile(), function(url)
-					{
-						editorUi.spinner.stop();
-						var dlg = new EmbedDialog(editorUi, editorUi.createLink(linkTarget,
-							linkColor, allPages, lightbox, editLink, layers, url));
-						editorUi.showDialog(dlg.container, 440, 240, true, true);
-						dlg.init();
-					});
-				}
-			});
-		}));
 
 		editorUi.actions.addAction('microsoftOffice...', function()
 		{
@@ -2488,22 +2470,6 @@
 			editorUi.openLink('https://get.draw.io/')
 		}));
 
-		this.editorUi.actions.addAction('share...', mxUtils.bind(this, function()
-		{
-			try
-			{
-				var file = editorUi.getCurrentFile();
-				
-				if (file != null)
-				{
-					file.share();
-				}
-			}
-			catch (e)
-			{
-				editorUi.handleError(e);
-			}
-		}));
 
 		this.put('embed', new Menu(mxUtils.bind(this, function(menu, parent)
 		{
