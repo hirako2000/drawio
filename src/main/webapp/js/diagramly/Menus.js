@@ -263,96 +263,7 @@
 			}
 		}));
 		
-		editorUi.actions.put('exportPdf', new Action(mxResources.get('formatPdf') + '...', function()
-		{
-			if (!EditorUi.isElectronApp && (editorUi.isOffline() || editorUi.printPdfExport))
-			{
-				// Export PDF action for chrome OS (same as print with different dialog title)
-				editorUi.showDialog(new PrintDialog(editorUi, mxResources.get('formatPdf')).container, 360,
-						(editorUi.pages != null && editorUi.pages.length > 1 && (editorUi.editor.editable ||
-						urlParams['hide-pages'] != '1')) ?
-						450 : 370, true, true);
-			}
-			else
-			{
-				var noPages = editorUi.pages == null || editorUi.pages.length <= 1;
-				var div = document.createElement('div');
-				div.style.whiteSpace = 'nowrap';
-				
-				var hd = document.createElement('h3');
-				mxUtils.write(hd, mxResources.get('formatPdf'));
-				hd.style.cssText = 'width:100%;text-align:center;margin-top:0px;margin-bottom:4px';
-				div.appendChild(hd);
-				
-				var cropEnableFn = function()
-				{
-					if (allPages != this && this.checked)
-					{
-						crop.removeAttribute('disabled');
-						crop.checked = !graph.pageVisible;
-					}
-					else
-					{
-						crop.setAttribute('disabled', 'disabled');
-						crop.checked = false;
-					}
-				};
-				
-				var dlgH = 180;
-				
-				if (editorUi.pdfPageExport && !noPages)
-				{
-					var allPages = editorUi.addRadiobox(div, 'pages', mxResources.get('allPages'), true);
-					var currentPage = editorUi.addRadiobox(div, 'pages', mxResources.get('currentPage'), false);
-					var selection = editorUi.addRadiobox(div, 'pages', mxResources.get('selectionOnly'), false, graph.isSelectionEmpty());
-					var crop = editorUi.addCheckbox(div, mxResources.get('crop'), false, true);
-					var grid = editorUi.addCheckbox(div, mxResources.get('grid'), false, false);
-					
-					mxEvent.addListener(allPages, 'change', cropEnableFn);
-					mxEvent.addListener(currentPage, 'change', cropEnableFn);
-					mxEvent.addListener(selection, 'change', cropEnableFn);
-					dlgH += 60;
-				}
-				else
-				{
-					var selection = editorUi.addCheckbox(div, mxResources.get('selectionOnly'),
-							false, graph.isSelectionEmpty());
-					var crop = editorUi.addCheckbox(div, mxResources.get('crop'),
-							!graph.pageVisible || !editorUi.pdfPageExport,
-							!editorUi.pdfPageExport);
-					var grid = editorUi.addCheckbox(div, mxResources.get('grid'), false, false);
-					
-					// Crop is only enabled if selection only is selected
-					if (!editorUi.pdfPageExport)
-					{
-						mxEvent.addListener(selection, 'change', cropEnableFn);	
-					}
-				}
-				
-				var isDrawioWeb = !mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
-					editorUi.getServiceName() == 'draw.io';
-
-				var transparentBkg = null, include = null;
-					
-				if (isDrawioWeb)
-				{
-					include = editorUi.addCheckbox(div,
-							mxResources.get('includeCopyOfMyDiagram'), true);
-					transparentBkg = editorUi.addCheckbox(div,
-							mxResources.get('transparentBackground'), false);
-					
-					dlgH += 60;
-				}
-				
-				var dlg = new CustomDialog(editorUi, div, mxUtils.bind(this, function()
-				{
-					editorUi.downloadFile('pdf', null, null, !selection.checked,
-						noPages? true : !allPages.checked, !crop.checked, transparentBkg != null && transparentBkg.checked, null,
-						null, grid.checked, include != null && include.checked);
-				}), null, mxResources.get('export'));
-				editorUi.showDialog(dlg.container, 300, dlgH, true, true);
-			}
-		}));
+		
 		
 		editorUi.actions.addAction('open...', function()
 		{
@@ -1915,16 +1826,6 @@
 			
 			this.addMenuItems(menu, ['exportSvg', '-'], parent);
 			
-			// Redirects export to PDF to print in Chrome App
-			if (editorUi.isOffline() || editorUi.printPdfExport)
-			{
-				this.addMenuItems(menu, ['exportPdf'], parent);
-			}
-			// Disabled for standalone mode in iOS because new tab cannot be closed
-			else if (!editorUi.isOffline() && (!mxClient.IS_IOS || !navigator.standalone))
-			{
-				this.addMenuItems(menu, ['exportPdf'], parent);
-			}
 
 			if (!mxClient.IS_IE && (typeof(VsdxExport) !== 'undefined' || !editorUi.isOffline()))
 			{
