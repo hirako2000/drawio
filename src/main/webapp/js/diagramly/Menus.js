@@ -237,17 +237,6 @@
 			editorUi.showDialog(dlg.container, 300, 180, true, true);
 		}));
 		
-		editorUi.actions.put('exportUrl', new Action(mxResources.get('url') + '...', function()
-		{
-			editorUi.showPublishLinkDialog(mxResources.get('url'), true, null, null,
-				function(linkTarget, linkColor, allPages, lightbox, editLink, layers)
-			{
-				var dlg = new EmbedDialog(editorUi, editorUi.createLink(linkTarget,
-					linkColor, allPages, lightbox, editLink, layers, null, true));
-				editorUi.showDialog(dlg.container, 440, 240, true, true);
-				dlg.init();
-			});
-		}));
 		
 		editorUi.actions.put('exportHtml', new Action(mxResources.get('formatHtmlEmbedded') + '...', function()
 		{
