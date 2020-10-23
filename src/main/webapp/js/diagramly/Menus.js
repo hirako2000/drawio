@@ -2455,10 +2455,6 @@
 			}
 		}));
 		
-		this.put('publish', new Menu(mxUtils.bind(this, function(menu, parent)
-		{
-			this.addMenuItems(menu, ['publishLink'], parent);
-		})));
 
 		editorUi.actions.put('useOffline', new Action(mxResources.get('useOffline') + '...', function()
 		{
