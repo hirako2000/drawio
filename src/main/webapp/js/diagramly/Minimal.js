@@ -884,13 +884,6 @@ EditorUi.initMinimalTheme = function()
         this.put('exportAs', new Menu(mxUtils.bind(this, function(menu, parent)
         {
         	exportAsMenu.funct(menu, parent);
-
-    		if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp)
-    		{
-	            // Publish menu contains only one element by default...
-	            //ui.menus.addSubmenu('publish', menu, parent); 
-	            ui.menus.addMenuItems(menu, ['publishLink'], parent);
-    		}
     		
             menu.addSeparator(parent);
             ui.menus.addSubmenu('embed', menu, parent);
