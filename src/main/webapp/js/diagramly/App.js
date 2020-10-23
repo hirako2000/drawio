@@ -1554,10 +1554,6 @@ App.prototype.init = function()
 				var file = this.getCurrentFile();
 				var mode = (file != null) ? file.getMode() : null;
 				
-				if (mode == App.MODE_DEVICE || mode == App.MODE_BROWSER)
-				{
-					this.showDownloadDesktopBanner();
-				}
 			}));
 		}
 		
@@ -3343,12 +3339,6 @@ App.prototype.showSplash = function(force)
 				}
 			}), true);
 		
-		if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && !this.isOfflineApp() &&
-			!mxClient.IS_ANDROID && !mxClient.IS_IOS &&
-			this.mode == App.MODE_DEVICE)
-		{
-			this.showDownloadDesktopBanner();
-		}
 	});
 	
 	if (this.editor.isChromelessView())
